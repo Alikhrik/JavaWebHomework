@@ -1,26 +1,18 @@
 package itstep.learning.servlet;
 
-import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import itstep.learning.model.FormsModel;
-import itstep.learning.service.IHashService;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.*;
+import javax.servlet.http.*;
 import java.io.IOException;
 
 @Singleton
-public class FormsServlet extends HttpServlet {
-    @Inject
-    private IHashService hashService;
-
+public class FormsProcessorServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setAttribute("viewName", "formsProcessor");
         HttpSession session = req.getSession();
-        req.setAttribute("viewName", "forms");
         FormsModel model = (FormsModel) session.getAttribute("model");
         if(model == null) {
             String isFromForm = req.getParameter("isFromForm");
@@ -39,13 +31,7 @@ public class FormsServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        FormsModel model = FormsModel.parse(req);
-        model.setMethod(req.getMethod());
-        HttpSession session = req.getSession();
-        model.setText(model.getText() + " " + hashService.getHexHash(model.getText()));
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        session.setAttribute("model", model);
-        resp.sendRedirect(req.getRequestURI());
     }
 }

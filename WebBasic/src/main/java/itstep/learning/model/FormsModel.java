@@ -9,7 +9,7 @@ import java.util.Date;
 
 public class FormsModel {
     private int number;
-    private String string;
+    private String text;
     private Date date;
     private String message;
     private Color color;
@@ -40,12 +40,12 @@ public class FormsModel {
         this.number = number;
     }
 
-    public String getString() {
-        return string;
+    public String getText() {
+        return text;
     }
 
-    public void setString(String string) {
-        this.string = string;
+    public void setText(String text) {
+        this.text = text;
     }
 
     public Date getDate() {
@@ -68,7 +68,7 @@ public class FormsModel {
     public String toString() {
         return "FormsModel{" +
                 " number: " + number +
-                " string: '" + string + '\'' +
+                " text: '" + text + '\'' +
                 " date: " + date +
                 " color: " + color +
                 " message: '" + message + '\'' +
@@ -79,7 +79,7 @@ public class FormsModel {
     public static FormsModel parse(HttpServletRequest req) {
         FormsModel model = new FormsModel();
 
-        String string = req.getParameter("string");
+        String string = req.getParameter("text");
 
         String str_num = req.getParameter("number");
         int number = str_num == null || str_num == "" ? 0 : Integer.parseInt(str_num);
@@ -100,7 +100,7 @@ public class FormsModel {
         String par_color = req.getParameter("color");
         Color color = Color.web(par_color == null ? "#FFFFFF" : par_color);
 
-        model.setString(string);
+        model.setText(string);
         model.setNumber(number);
         model.setDate(date);
         model.setColor(color);
